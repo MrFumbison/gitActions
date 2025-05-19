@@ -8,6 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -23,9 +24,18 @@
             background-color: white;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        .timestamp {
+            margin-top: 20px;
+            color: #666;
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
     <h1>Hello World!</h1>
+    <div class="timestamp">Last updated: <span id="timestamp"></span></div>
+    <script>
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+    </script>
 </body>
 </html> 
