@@ -1,0 +1,41 @@
+name: Node.js CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run linting
+      run: npm run lint || true  # Added || true since we haven't set up linting yet
+    
+    - name: Run tests
+      run: npm test || true  # Added || true since we haven't set up tests yet
+    
+    - name: Build
+      run: npm run build || true  # Added || true since we haven't set up build yet
+    
+    - name: Deploy
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: echo "Deployment would happen here"
+      # Add your deployment steps here 
